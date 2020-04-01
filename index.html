@@ -25,7 +25,7 @@
                             copyTemplate = copyTemplate.replace(key,this._data[nKey]);
                         }
                         document.body.innerHTML = copyTemplate;
-                    }
+                    };
                     
                     observe(this._data,render)
                     render()
@@ -44,11 +44,11 @@
                     <div>{{age}}</div>
                 `,
                 data: obj
-            })
+            });
 
-            setTimeout(()=>{
-                obj.name = 'shaw';
-            },2000)
+            // setTimeout(()=>{
+            //     obj.name = 'shaw';
+            // },2000)
 
 
         }
