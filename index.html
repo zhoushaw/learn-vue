@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="module">
+        import observe from './observe.js';
+        window.onload = function(){
+
+            class Vue{
+                constructor(options){
+                    this._data = options.data;
+                    this._template = options.template;
+                }
+
+                _init() {
+                    let render = ()=>{
+                        var reg = /\{\{([a-z\$]+)\}\}/g;
+                        var copyTemplate = this._template;
+                        let keyArr = copyTemplate.match(reg);
+                        for(var key of keyArr){
+                            let nKey = key.replace(/[\{\}]/g,'');
+                            copyTemplate = copyTemplate.replace(key,this._data[nKey]);
+                        }
+                        document.body.innerHTML = copyTemplate;
+                    }
+                    
+                    observe(this._data,render)
+                    render()
+                }
+            }
+
+
+            var obj = {
+                name: 'zhoushaw',
+                age: 25
+            };
+
+            new Vue({
+                template: `
+                    <div>{{name}}</div>
+                    <div>{{age}}</div>
+                `,
+                data: obj
+            })
+
+            setTimeout(()=>{
+                obj.name = 'shaw';
+            },2000)
+
+
+        }
+    </script>
+</head>
+<body>
+    <!-- <input id="oInput" type="text"> -->
+    <!-- <div id="app">
+         <div>{{name}}</div>
+    </div> -->
+</body>
+</html>
