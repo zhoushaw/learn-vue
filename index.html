@@ -28,7 +28,8 @@
                             let nKey = key.replace(/[\{\}]/g,'');
                             copyTemplate = copyTemplate.replace(key,this._data[nKey]);
                         }
-                        document.body.innerHTML = copyTemplate;
+                        var oApp = document.getElementById('app');
+                        oApp.innerHTML = copyTemplate;
                     };
                     
                     proxy.call(this,this._data);
@@ -42,11 +43,12 @@
 
             var obj = {
                 name: 'zhoushaw',
-                age: 25,
+                age: 24,
                 job: 'fe'
             };
 
             var vue = new Vue({
+                el: '#app',
                 template: `
                     <div>{{name}}</div>
                     <div>{{age}}</div>
@@ -56,17 +58,18 @@
 
             
             setTimeout(()=>{
-                obj.job = 'java';
+                obj.name = 'shaw';
             },2000)
-
+            setTimeout(()=>{
+                obj.age = 33;
+                console.log(obj);
+                
+            },4000)
 
         }
     </script>
 </head>
 <body>
-    <!-- <input id="oInput" type="text"> -->
-    <!-- <div id="app">
-         <div>{{name}}</div>
-    </div> -->
+    <div id="app"></div>
 </body>
 </html>
