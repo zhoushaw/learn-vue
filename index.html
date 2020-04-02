@@ -7,12 +7,16 @@
     <title>Document</title>
     <script type="module">
         import observe from './observe.js';
+        import proxy from './proxy.js';
+        import Watcher from './watcher.js';
+
         window.onload = function(){
 
             class Vue{
                 constructor(options){
                     this._data = options.data;
                     this._template = options.template;
+                    this._init();
                 }
 
                 _init() {
@@ -27,7 +31,10 @@
                         document.body.innerHTML = copyTemplate;
                     };
                     
+                    proxy.call(this,this._data);
                     observe(this._data,render)
+                    new Watcher(this,render);
+
                     render()
                 }
             }
@@ -35,10 +42,11 @@
 
             var obj = {
                 name: 'zhoushaw',
-                age: 25
+                age: 25,
+                job: 'fe'
             };
 
-            new Vue({
+            var vue = new Vue({
                 template: `
                     <div>{{name}}</div>
                     <div>{{age}}</div>
@@ -46,9 +54,10 @@
                 data: obj
             });
 
-            // setTimeout(()=>{
-            //     obj.name = 'shaw';
-            // },2000)
+            
+            setTimeout(()=>{
+                obj.job = 'java';
+            },2000)
 
 
         }
